@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  nodo1:
+    image: cassandra:latest
+    container_name: nodo1
+    ports:
+      - 7001:9042
+    environment:
+      - CLUSTER_NAME=cluster
+    networks:
+      - inf325
+    restart: unless-stopped
+  nodo2:
+    image: cassandra:latest
+    container_name: nodo2
+    ports:
+      - 7002:9042
+    environment:
+      - CASSANDRA_SEEDS=nodo1
+      - CLUSTER_NAME=cluster
+    networks:
+      - inf325
+    restart: unless-stopped
+  nodo3:
+    image: cassandra:latest
+    container_name: nodo3
+    ports:
+      - 7003:9042
+    environment:
+      - CASSANDRA_SEEDS=nodo1
+      - CLUSTER_NAME=cluster
+    networks:
+      - inf325
+    restart: unless-stopped
+
+networks:
+  inf325:
